@@ -1,0 +1,29 @@
+{
+  "name": "hwblog-service",
+  "version": "0.0.1",
+  "description": "node express blog ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HeartWalker/HWblog-service.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "blog"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HeartWalker/HWblog-service/issues"
+  },
+  "homepage": "https://github.com/HeartWalker/HWblog-service#readme",
+  "dependencies": {
+    "express": "^4.15.4",
+    "hbs": "^4.0.1",
+    "normalize.css": "^7.0.0"
+  }
+}

@@ -1,0 +1,28 @@
+@import '../../node_modules/normalize.css/normalize';
+@import './common.scss';
+
+body {
+  background: #ddd no-repeat center/cover fixed;
+  font-family: Helvetica, Tahoma, Arial, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, STXihei, “华文细黑”, Heiti, “黑体”, sans-serif;
+}
+header {
+  background: #578ae3;
+}
+.container {
+  padding:20px 0;
+  width:1200px;
+  margin:0 auto;
+}
+.imglogo {
+  width:125px;
+  padding: 0 20px;
+  img {
+    width:100%;
+    border-radius: 10px;
+  }
+}
+.textlogo {
+  font-size:56px;
+  color:#fff;
+  margin:0;
+}
