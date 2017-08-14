@@ -23,7 +23,9 @@
   "homepage": "https://github.com/HeartWalker/HWblog-service#readme",
   "dependencies": {
     "express": "^4.15.4",
+    "express-winston": "^2.4.0",
     "hbs": "^4.0.1",
-    "normalize.css": "^7.0.0"
+    "normalize.css": "^7.0.0",
+    "winston": "^2.3.1"
   }
 }
