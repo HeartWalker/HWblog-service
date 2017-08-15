@@ -3,6 +3,9 @@ const express = require('express');
 const winston = require('winston');
 const expressWinston = require('express-winston');
 
+const config = require('./config');
+const router = require('./router');
+
 const app = express();
 
 
@@ -11,7 +14,7 @@ app.set('views', path.join(__dirname, 'views'));
 // 设置模板引擎为 hbs
 app.set('view engine', 'hbs');
 //设置静态文件目录
-app.use('/static', express.static(path.join(__dirname, 'views')));
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
 
 // 正常请求的日志
@@ -27,11 +30,9 @@ app.use(expressWinston.logger({
     ]
 }));
 
-
 // 路由
-app.get('/', function(req, res){
-    res.send('hello world');
-});
+app.use(router);
+
 
 //404
 app.use(function(req, res, next) {
@@ -62,6 +63,13 @@ app.use(function(err, req, res, next) {
 });
 
 
-app.listen(3000);
+// app listen
+if (!module.parent) {
+    let port = process.env.PORT || config.port;
+    app.listen(port, error => {
+        if (error) throw error;
+        console.log(`app is ready, please visit http://localhost:${port}/`);
+    })
+}
 
 

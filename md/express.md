@@ -27,3 +27,7 @@ app.get('/products/:id', (req, res) => {
 `app.get('/', (req, res) => {
   res.send('hello')
 })`
+
+
+{{!-- hahahaha 我是服务端注释（模版引擎执行时会自动过滤掉） --}}
+<!-- hahahaha 我是客户端注释 -->

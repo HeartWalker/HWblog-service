@@ -4,7 +4,8 @@
   "description": "node express blog ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "develop": "gulp"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,14 @@
   "dependencies": {
     "express": "^4.15.4",
     "express-winston": "^2.4.0",
+    "glob": "^7.1.2",
     "hbs": "^4.0.1",
     "normalize.css": "^7.0.0",
     "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.13",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1"
   }
 }

@@ -6,6 +6,10 @@
 3. normalize.css : A modern alternative to CSS resets
 4. winston: 日志
 5. express-winston: 基于express的wignston的中间件
+6. gulp:自动化工具
+7. browser-sync: 自动刷新浏览器
+8. gulp-nodemon: nodemon gulp 模块
+9. glob: 文件匹配
 
 ### 全局依赖
 1. nodemon 自动重启node
