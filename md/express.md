@@ -31,3 +31,7 @@ app.get('/products/:id', (req, res) => {
 
 {{!-- hahahaha 我是服务端注释（模版引擎执行时会自动过滤掉） --}}
 <!-- hahahaha 我是客户端注释 -->
+
+
+*** express 生产环境最佳实践
+http://expressjs.com/zh-cn/advanced/best-practice-performance.html

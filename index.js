@@ -2,12 +2,15 @@ const path = require('path');
 const express = require('express');
 const winston = require('winston');
 const expressWinston = require('express-winston');
+const compression = require('compression');
+
 
 const config = require('./config');
 const router = require('./router');
 
 const app = express();
-
+//启用gzip压缩 暂时无效 原因不明
+app.use(compression());
 
 // 设置模板目录
 app.set('views', path.join(__dirname, 'views'));

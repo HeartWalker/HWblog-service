@@ -10,6 +10,7 @@
 7. browser-sync: 自动刷新浏览器
 8. gulp-nodemon: nodemon gulp 模块
 9. glob: 文件匹配
+10. compression: gzip 压缩 ----暂时无效 原因不明
 
 ### 全局依赖
 1. nodemon 自动重启node
