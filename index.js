@@ -3,7 +3,7 @@ const express = require('express');
 const winston = require('winston');
 const expressWinston = require('express-winston');
 const compression = require('compression');
-
+const hbs = require('hbs');
 
 const config = require('./config');
 const router = require('./router');
@@ -11,6 +11,13 @@ const router = require('./router');
 const app = express();
 //启用gzip压缩 暂时无效 原因不明
 app.use(compression());
+
+// 将app的locals中所有的属性都作为模版的变量
+// 此处的变量设置是全局的
+hbs.localsAsTemplateData(app)
+// 公共模版变量 @key 获取
+Object.assign(app.locals,config.locals);
+
 
 // 设置模板目录
 app.set('views', path.join(__dirname, 'views'));
