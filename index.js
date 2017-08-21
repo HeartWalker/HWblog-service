@@ -4,11 +4,14 @@ const winston = require('winston');
 const expressWinston = require('express-winston');
 const compression = require('compression');
 const hbs = require('hbs');
+const bodyParser = require('body-parser');
+const session = require('express-session');
 
 const config = require('./config');
 const router = require('./router');
 
 const app = express();
+
 //启用gzip压缩 暂时无效 原因不明
 app.use(compression());
 
@@ -26,6 +29,25 @@ app.set('view engine', 'hbs');
 //设置静态文件目录
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
+//解析请求体
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
+
+// session 中间件
+app.use(session({
+    name: 'admin',// 设置 cookie 中保存 session id 的字段名称
+    secret: 'heartwalker',// 通过设置 secret 来计算 hash 值并放在 cookie 中，使产生的 signedCookie 防篡改
+    resave: false,// 强制更新 session
+    saveUninitialized: false,// 设置为 false，强制创建一个 session，即使用户未登录
+    cookie: {
+        maxAge: 6000// 过期时间，过期后 cookie 中的 session id 自动删除
+    },
+    /*store: new MongoStore({// 将 session 存储到 mongodb
+        url: config.mongodb// mongodb 地址
+    })*/
+}));
 
 // 正常请求的日志
 app.use(expressWinston.logger({

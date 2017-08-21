@@ -1,14 +1,14 @@
 <div class="">
-    <form class="sign">
+    <form class="sign" action="/sign" method="post">
         <h3 class="title">系统登录</h3>
         <div class="user">
-            <input autocomplete="off" placeholder="HW?" type="text"  validateevent="true" >
+            <input autocomplete="off" placeholder="HW?" type="text"  validateevent="true"  name="user">
         </div>
         <div class="password">
-            <input autocomplete="off" placeholder="请输入密码" type="password"  validateevent="true" class="">
+            <input autocomplete="off" placeholder="请输入密码" type="password"  validateevent="true" class="" name="password">
         </div>
         <div class="">
-            <button type="button" class="submit" >
+            <button type="submit" class="submit" >
                 登录
             </button>
         </div>

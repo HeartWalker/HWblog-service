@@ -11,6 +11,8 @@
 8. gulp-nodemon: nodemon gulp 模块
 9. glob: 文件匹配
 10. compression: gzip 压缩 ----暂时无效 原因不明
+11. body-parse: 解析请求体
+12. express-session:　session 中间件
 
 ### 全局依赖
 1. nodemon 自动重启node

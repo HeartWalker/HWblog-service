@@ -7,7 +7,14 @@ router.get('/', function(req, res){
 });
 
 router.get('/article', function(req, res){
-    res.render('article');
+    console.log(req.session.user);
+    console.log('----------------------');
+    if(req.session.user){
+        res.render('article');
+    } else {
+        res.redirect('/sign');
+    }
+
 });
 
 module.exports = router;
