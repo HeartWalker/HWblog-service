@@ -1,5 +1,5 @@
 基于node express 的博客服务端
-
+运行: npm run gulp
 ### 开发依赖
 1. epxress: web 框架
 2. hbs : 基于 handlebas 的 express 模板
