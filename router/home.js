@@ -6,10 +6,6 @@ router.get('/', function(req, res){
     res.send('hello world');
 });
 
-router.get('/article/test', function(req, res){
-    res.send('hello world');
-});
-
 
 router.get('/article', function(req, res){
     console.log(req.session.user);
