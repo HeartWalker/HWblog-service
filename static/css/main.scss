@@ -102,3 +102,19 @@ footer {
     margin: 0 0 35px;
   }
 }
+
+.error-msg ,.success-msg{
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  width:50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  line-height: 50px;
+  text-align: center;
+  color: orange;
+  background: rgba(0,0,0,.3);
+}
+.success-msg{
+  color: green;
+}

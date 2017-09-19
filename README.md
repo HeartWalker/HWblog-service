@@ -13,7 +13,8 @@
 10. compression: gzip 压缩 ----暂时无效 原因不明
 11. body-parse: 解析请求体
 12. express-session:　session 中间件
-
+13. mysql：
+14. connect-flash:
 ### 全局依赖
 1. nodemon 自动重启node
 2. node-sass 基于 node 的 sass 模块

@@ -1,5 +1,5 @@
 res.end 不支持对象, 支持 JSON XML
-res.send 支持直接写入对象到响应流中
+res.send 支持直接写入对象到响应流中 send 内部使用 end
 
 // :指的是占位符
 

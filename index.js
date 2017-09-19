@@ -6,21 +6,23 @@ const compression = require('compression');
 const hbs = require('hbs');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const flash = require('connect-flash');
 
 const config = require('./config');
 const router = require('./router');
 
 const app = express();
 
+/*******************************************************************************************/
 //启用gzip压缩 暂时无效 原因不明
 app.use(compression());
 
+/*******************************************************************************************/
 // 将app的locals中所有的属性都作为模版的变量
 // 此处的变量设置是全局的
-hbs.localsAsTemplateData(app)
+hbs.localsAsTemplateData(app);
 // 公共模版变量 @key 获取
 Object.assign(app.locals,config.locals);
-
 
 // 设置模板目录
 app.set('views', path.join(__dirname, 'views'));
@@ -29,12 +31,14 @@ app.set('view engine', 'hbs');
 //设置静态文件目录
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
+/*******************************************************************************************/
 //解析请求体
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+/*******************************************************************************************/
 // session 中间件
 app.use(session({
     name: 'admin',// 设置 cookie 中保存 session id 的字段名称
@@ -49,6 +53,17 @@ app.use(session({
     })*/
 }));
 
+/*******************************************************************************************/
+// flash 中间件，用来显示通知
+app.use(flash());
+
+app.use(function (req, res, next) {
+  res.locals.success = req.flash('success').toString();
+  res.locals.error = req.flash('error').toString();
+  next();
+});
+
+/*******************************************************************************************/
 // 正常请求的日志
 app.use(expressWinston.logger({
     transports: [

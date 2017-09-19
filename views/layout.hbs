@@ -19,9 +19,37 @@
     <h1 class="textlogo fl">hw</h1>
 </div>
 </header>
+{{#if error}}
+<div class="error-msg">
+    {{error}}
+</div>
+{{/if}}
+{{#if success}}
+<div class="success-msg">
+    {{success}}
+</div>
+{{/if}}
+
 {{{body}}}
+
 <footer>
 
 </footer>
+<script>
+    window.onload = function () {
+        var err = document.querySelector('.error-msg');
+        var succ = document.querySelector('.success-msg');
+        hideMsg(err);
+        hideMsg(succ);
+        function hideMsg(dom) {
+            if(dom){
+                setTimeout(function () {
+                    dom.style.display = 'none'
+                }, 2000);
+            }
+        }
+
+    }
+</script>
 </body>
 </html>
