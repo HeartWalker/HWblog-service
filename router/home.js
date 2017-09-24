@@ -8,8 +8,6 @@ router.get('/', function(req, res){
 
 
 router.get('/article', function(req, res){
-    console.log(req.session.user);
-    console.log('----------------------');
     if(req.session.user){
         res.render('article');
     } else {

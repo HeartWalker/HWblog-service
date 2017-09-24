@@ -17,7 +17,7 @@ gulp.task('default', function() {
     }).on('start', function() {
         browserSync.init({
             proxy: `http://localhost:${config.port}`,
-            files: ["./views/", "./static"],
+            files: ["./views/", "./static/css/"],
             port: 3001
         }, function() {
             console.log("browser refreshed.");

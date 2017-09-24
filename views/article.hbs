@@ -28,18 +28,40 @@
     </div>
 
 </div>
+
 <div class="container">
     <div class="article">
+        <form id="upImg" action="/upload/img" method="post" enctype="multipart/form-data" target="form-iframe">
         <p>上传图片:</p>
         <div class="upload-img">
-            <p><input type="text" placeholder="请输入图片名称"></p>
-            <p><input type="file" name="" id="img"></p>
-            <input type="button" value="点击提交" id="upImg">
+            <p><input type="text" name="imgname" placeholder="请输入图片名称"></p>
+            <p><input type="file" name="avatar" id="img" ></p>
+            <p><input type="button" value="点击提交" id="upImgClick"></p>
+
         </div>
+        </form>
+        <img id="show" src="" alt="">
     </div>
 </div>
 <script>
-    document.getElementById("upImg").addEventListener('click',function () {
 
+    document.getElementById("upImgClick").addEventListener('click',function (e) {
+      if(!document.getElementById("img").value){
+        return false;
+      }
+      var form = document.getElementById("upImg");
+      if(!document.getElementById("formIframe")){
+        var iframe = document.createElement("iframe");
+        iframe.name = form.target;
+        iframe.style.display = "none";
+        form.appendChild(iframe);
+      }
+      iframe.onload = function(){
+          var responseData = this.contentDocument.body.textContent
+                  || this.contentWindow.document.body.textContent;
+          console.log(responseData);
+      };
+      form.submit();
+      form.reset();
     });
 </script>
