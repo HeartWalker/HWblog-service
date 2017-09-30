@@ -110,7 +110,7 @@ app.use(function(err, req, res, next) {
 
 
 // app listen
-if (!module.parent && (process.env.NODE_ENV != 'development')) {
+if (!module.parent ) {
     let port = process.env.PORT || config.port;
     app.listen(port, error => {
         if (error) throw error;
