@@ -10,7 +10,7 @@ router.post('/sign', function(req, res){
     if(req.body.user === 'ztl' && req.body.password === "147"){
         req.session.user = req.body.user;
         req.flash('success', '登录成功');
-        res.redirect('/article');
+        res.redirect('/home');
     } else {
       req.flash('error', '账号或密码错误');
       res.redirect('/sign');

@@ -3,13 +3,13 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', function(req, res){
-    res.send('hello world');
+    res.render('sign');
 });
 
 
-router.get('/article', function(req, res){
+router.get('/home', function(req, res){
     if(req.session.user){
-        res.render('article');
+        res.render('home');
     } else {
         res.redirect('/sign');
     }
