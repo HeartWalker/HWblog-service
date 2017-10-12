@@ -6,6 +6,21 @@ body {
 header {
   background: #578ae3;
 }
+.nav {
+  li{
+    float: right;
+    font-size: 26px;
+  }
+  a{
+    color:#fff;
+    padding: 5px 20px;
+
+    &:hover{
+      background: #1a5dd2;
+      color: #e9cd4c;
+    }
+  }
+}
 .container {
   padding:20px 0;
   max-width:1200px;
@@ -117,4 +132,10 @@ footer {
 }
 .success-msg{
   color: green;
+}
+.archive{
+  li{
+    line-height:30px;
+
+  }
 }

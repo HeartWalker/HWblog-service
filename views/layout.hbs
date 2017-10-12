@@ -17,7 +17,14 @@
     <div class="imglogo fl">
         <img src="../static/images/logo.png" alt="">
     </div>
-    <h1 class="textlogo fl">hw</h1>
+    <h1 class="textlogo">hw</h1>
+    {{#if success}}
+        <ul class="nav">
+            <li><a href="/">home</a></li>
+            <li><a href="/archive">archive</a></li>
+        </ul>
+    {{/if}}
+
 </div>
 </header>
 {{#if error}}

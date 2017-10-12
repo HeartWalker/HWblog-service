@@ -1,5 +1,6 @@
 
-document.getElementById("upImgClick").addEventListener('click',function (e) {
+var upImgClick = document.getElementById("upImgClick");
+upImgClick && upImgClick.addEventListener('click',function (e) {
     if(!document.getElementById("img").value){
         return false;
     }
@@ -20,7 +21,8 @@ document.getElementById("upImgClick").addEventListener('click',function (e) {
     form.reset();
 });
 
-document.getElementById('textSubmit').addEventListener('click',function (event) {
+var textSubmit = document.getElementById('textSubmit');
+textSubmit && textSubmit.addEventListener('click',function (event) {
     var content = document.getElementById('content').value,
         title = document.getElementById('title').value;
     if(!title){

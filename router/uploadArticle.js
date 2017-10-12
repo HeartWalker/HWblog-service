@@ -1,7 +1,7 @@
 const fs = require('fs');
-const path = require('path');
+//const path = require('path');
 const express = require('express');
-
+const filepath = require('../config').articlePath;
 const router = express.Router();
 
 router.post('/upload/article',function (req,res) {
@@ -11,7 +11,7 @@ router.post('/upload/article',function (req,res) {
         time = Date.now();
     let delimiter = '@#';
     title = title.replace(delimiter,'');
-    let filepath = path.resolve(process.cwd(),'./article');
+    //let filepath = path.resolve(process.cwd(),'./article');
     let filename =filepath + '/' + [title, archive, time].join(delimiter);
 
     fs.writeFile(filename, content,'utf8', (err) => {
