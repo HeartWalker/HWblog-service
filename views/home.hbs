@@ -3,14 +3,15 @@
     <div class="article">
         <form action="/upload/article" method=post>
             <div class="title">
-                <p>标题: <input name="title" type="text" class="" id='title' placeholder='必填项'></p>
+                <p>标题: <input name="title" type="text" class="" id='title' placeholder='必填项' value={{title}}></p>
 
-                <p>归档: <input name="archive" type="text" class="" id='archive'></p>
+                <p>归档: <input name="archive" type="text" class="" id='archive' value={{archive}}></p>
+                <input type="hidden" name="time" value={{time}}>
 
             </div>
             <div class="content">
-                <p>文章内容:</p>
-                <textarea name="content" id="content" cols="30" rows="10" placeholder='必填项'></textarea>
+                <p>文章内容(支持markdown):</p>
+                <textarea name="content" id="content" cols="30" rows="10" placeholder='必填项' >{{content}}</textarea>
             </div>
             <input type="submit" class='submit' id='textSubmit'>
         </form>

@@ -2,7 +2,7 @@
     <p>所有文章:</p>
     <ol>
         {{#each archives}}
-            <li><a href="">{{title}}</a></li>
+            <li><a href="/archive/{{@index}}"><span class=time>{{date}}</span>{{title}}</a></li>
 
         {{/each}}
 
