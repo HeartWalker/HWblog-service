@@ -78,12 +78,17 @@ app.use(expressWinston.logger({
 }));
 
 //登录验证
-app.get('/*', function(req, res,next){
-    let url =req.url
+
+app.get(/^\/[^api].*$/, function(req, res,next){
+    console.log('===========================================================---------------------------------')
+    console.log(req.url)
+    let url = req.url;
     if(url != "/sign" && !req.session.user){
         res.redirect('/sign');
+    }else {
+        next();
     }
-    next();
+
 });
 
 

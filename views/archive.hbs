@@ -2,7 +2,10 @@
     <p>所有文章:</p>
     <ol>
         {{#each archives}}
-            <li><a href="/archive/{{@index}}"><span class=time>{{date}}</span>{{title}}</a></li>
+            <li>
+                <a href="/archive/{{time}}"><span class=time>{{date}}</span>{{title}}</a>
+                <a class="fr delete" href="/archive/delete/{{time}}">删除</a>
+            </li>
 
         {{/each}}
 
