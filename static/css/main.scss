@@ -144,4 +144,12 @@ footer {
   .delete{
     margin-right:5%;
   }
+  .title{
+    width: 70%;
+    display: inline-block;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    vertical-align: bottom;
+  }
 }

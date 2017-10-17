@@ -3,7 +3,8 @@
     <ol>
         {{#each archives}}
             <li>
-                <a href="/archive/{{time}}"><span class=time>{{date}}</span>{{title}}</a>
+                <a class="title" href="/archive/{{time}}"><span class=time>{{date}}</span>{{title}}</a>
+                <a class="" href="/archive/archive/{{archive}}">{{archive}}</a>
                 <a class="fr delete" href="/archive/delete/{{time}}">删除</a>
             </li>
 

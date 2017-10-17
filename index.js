@@ -79,9 +79,9 @@ app.use(expressWinston.logger({
 
 //登录验证
 
-app.get(/^\/[^api].*$/, function(req, res,next){
-    console.log('===========================================================---------------------------------')
-    console.log(req.url)
+app.get(/^(?!\/api).*$/, function(req, res,next){
+    //console.log('===========================================================---------------------------------')
+    //console.log(req.url)
     let url = req.url;
     if(url != "/sign" && !req.session.user){
         res.redirect('/sign');

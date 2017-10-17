@@ -35,3 +35,6 @@ app.get('/products/:id', (req, res) => {
 
 *** express 生产环境最佳实践
 http://expressjs.com/zh-cn/advanced/best-practice-performance.html
+
+
+正则表达式()()\1\2的用法  \1表示重复正则第一个圆括号内匹配到的内容  \2表示重复正则第二个圆括号内匹配到的内容

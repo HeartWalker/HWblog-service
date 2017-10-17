@@ -23,13 +23,15 @@ function getPaths() {
     glob.sync('*', { cwd: filepath }).forEach(r => {
         let arr = r.split('@#');
         let time = arr[2];
-        let obj = { title:arr[0], archive:arr[1], date:format(arr[2]), time:arr[2]};
+        let obj = { title:arr[0], archive:arr[1] || 'default', date:format(arr[2]), time:arr[2]};
         archives.push(obj);
         files[time] = Object.assign({},{name:r},obj);
 
     });
+    archives.sort(function (a, b) {
+        return a.time < b.time;
+    });
 }
-//todo 文章排序
 //getPaths();
 
 //archives:[{},{}]
@@ -66,6 +68,17 @@ router.get('/archive/:time', function (req, res, next) {
 
     });
 
+
+});
+
+//归档
+router.get('/archive/archive/:archive', function(req, res){
+    getPaths();
+    let arc = archives.filter(function (value, index) {
+        return value.archive === req.params.archive;
+    });
+    console.log(req.params.archive)
+    res.render('archive',{archives:arc});
 
 });
 
