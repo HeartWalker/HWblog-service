@@ -1,5 +1,10 @@
 <div style="margin-left: 5%" class=archive>
-    <p>所有文章:</p>
+    {{#if archive}}
+        <p>当前类目:{{archive }}</p>
+    {{else}}
+        <p>所有文章:</p>
+    {{/if}}
+
     <ol>
         {{#each archives}}
             <li>

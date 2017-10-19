@@ -5,46 +5,19 @@ const glob = require('glob');
 const fs = require('fs');
 const path = require('path');
 const filepath = require('../config').articlePath;
+const getArchives  = require( '../tool/getArchives');
 
-let format = (time) => {
-   time = parseInt(time)
-    let year = (new Date(time)).getFullYear();
-    let month = new Date(time).getMonth() + 1;
-    let day= new Date(time).getDate();
-    let date = year + '-' + month + '-' + day;
-    return date;
-}
 
-let archives = [];//
-let files = {};//时间 : 文件名
-function getPaths() {
-    archives = [];
-    files = {};
-    glob.sync('*', { cwd: filepath }).forEach(r => {
-        let arr = r.split('@#');
-        let time = arr[2];
-        let obj = { title:arr[0], archive:arr[1] || 'default', date:format(arr[2]), time:arr[2]};
-        archives.push(obj);
-        files[time] = Object.assign({},{name:r},obj);
-
-    });
-    archives.sort(function (a, b) {
-        return a.time < b.time;
-    });
-}
-//getPaths();
-
-//archives:[{},{}]
-//archives:{time:{},time:{}}
+let {archives, files } = getArchives();
 //所有文章目录
 router.get('/archive', function(req, res){
-        getPaths();
+        archives = getArchives().archives;
         res.render('archive',{archives});
 
 });
 //返回当前文章内容
 router.get('/archive/:time', function (req, res, next) {
-    getPaths();
+    files = getArchives().files ;
     let newpath =  path.join(filepath ,'/', files[req.params.time].name);
 
     fs.exists(newpath, function (exists) {
@@ -73,18 +46,18 @@ router.get('/archive/:time', function (req, res, next) {
 
 //归档
 router.get('/archive/archive/:archive', function(req, res){
-    getPaths();
+    archives = getArchives().archives;
     let arc = archives.filter(function (value, index) {
         return value.archive === req.params.archive;
     });
     console.log(req.params.archive)
-    res.render('archive',{archives:arc});
+    res.render('archive',{archives:arc,archive:req.params.archive});
 
 });
 
 //上传更新
 router.post('/upload/article',function (req,res) {
-    getPaths();
+    files = getArchives().files ;
     let title = req.body.title,
         content = req.body.content,
         archive = req.body.archive || '',
