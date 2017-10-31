@@ -6,5 +6,5 @@ module.exports = {
         site_name: 'hw',//title
     },
     articlePath: path.resolve(process.cwd(),'./article'),
-
+    pagination:2,
 }

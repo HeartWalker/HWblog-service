@@ -50,7 +50,7 @@ router.get('/archive/archive/:archive', function(req, res){
     let arc = archives.filter(function (value, index) {
         return value.archive === req.params.archive;
     });
-    console.log(req.params.archive)
+    //console.log(req.params.archive)
     res.render('archive',{archives:arc,archive:req.params.archive});
 
 });
