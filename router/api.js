@@ -45,7 +45,7 @@ router.get('/api/archive/:time', function (req, res, next) {
 });
 
 router.get('/api/page/:num', function (req, res, next) {
-    let num = req.params.num - 1 ;
+    let num = req.params.num  ;
     let length = getArchives().archives.length;
     let content = (getArchives().archives).splice(num, pagination);
     content.map((v, i, arr)=>{
