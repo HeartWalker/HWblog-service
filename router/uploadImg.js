@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
     cb(null, 'static/images/')
   },
   filename: function (req, file, cb) {
-    console.log(file);
+    //console.log(file);
     let fileName = file.originalname;
     //获取文件扩展类型名
     let extension = fileName.slice(fileName.lastIndexOf("."));
