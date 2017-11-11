@@ -5,19 +5,25 @@ const express = require('express');
 const router = express.Router();
 const filepath = require('../config').articlePath;
 const pagination = require('../config').pagination;
-const getArchives  = require( '../tool/getArchives');
+
+require('../tool/global');
+//global.getArchives();
+let archives = global.getArchives.archives;
+let files = global.getArchives.files;
+router.use('/api',function (req, res, next) {
+    global.getArchives();
+    next();
+})
 
 router.get('/api/test', function(req, res){
     res.send('api test');
 });
 
 router.get('/api/archives', function(req, res){
-    let {archives, files } = getArchives();
     res.send(archives);
 });
 router.get('/api/archive/:time', function (req, res, next) {
 
-    let files = getArchives().files ;
     let newpath =  path.join(filepath ,'/', files[req.params.time].name);
 
     fs.exists(newpath, function (exists) {
@@ -46,10 +52,9 @@ router.get('/api/archive/:time', function (req, res, next) {
 
 router.get('/api/page/:num', function (req, res, next) {
     let num = req.params.num * pagination ;
-    let length = Math.ceil(getArchives().archives.length/pagination);
-    let content = (getArchives().archives).splice(num, pagination);
+    let length = Math.ceil(archives.length/pagination);
+    let content = (archives).splice(num, pagination);
     content.map((v, i, arr)=>{
-        let files = getArchives().files ;
         let newpath =  path.join(filepath ,'/', files[v.time].name);
         fs.exists(newpath, function (exists) {
             if(exists){

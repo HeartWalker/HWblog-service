@@ -12,6 +12,9 @@ let format = (time) => {
 //archives:[{},{}]
 //files:{time:{},time:{}}
 function getArchives() {
+    if(getArchives.expire){
+        return;
+    }
     let archives = [];//
     let files = {};//时间 : 文件名
     glob.sync('*', { cwd: filepath }).forEach(r => {
@@ -25,10 +28,10 @@ function getArchives() {
     archives.sort(function (a, b) {
         return a.time < b.time;
     });
-    return {
-        archives,
-        files,
-    }
+
+    getArchives.archives = archives
+    getArchives.files = files
+    getArchives.expire = true
 }
 
 module.exports = getArchives
