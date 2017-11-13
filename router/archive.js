@@ -8,7 +8,7 @@ const filepath = require('../config').articlePath;
 //const getArchives  = require( '../tool/getArchives');
 
 require('../tool/global');
-//global.getArchives();
+global.getArchives();
 let archives = global.getArchives.archives;
 let files = global.getArchives.files;
 router.use('/archive',function (req, res, next) {

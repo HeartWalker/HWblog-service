@@ -7,7 +7,7 @@ const filepath = require('../config').articlePath;
 const pagination = require('../config').pagination;
 
 require('../tool/global');
-//global.getArchives();
+global.getArchives();
 let archives = global.getArchives.archives;
 let files = global.getArchives.files;
 router.use('/api',function (req, res, next) {
@@ -21,6 +21,8 @@ router.get('/api/test', function(req, res){
 
 router.get('/api/archives', function(req, res){
     res.send(archives);
+   // console.log(archives)
+    //console.log('--------------------------------------')
 });
 router.get('/api/archive/:time', function (req, res, next) {
 
@@ -51,10 +53,16 @@ router.get('/api/archive/:time', function (req, res, next) {
 });
 
 router.get('/api/page/:num', function (req, res, next) {
-    let num = req.params.num * pagination ;
-    let length = Math.ceil(archives.length/pagination);
-    let content = (archives).splice(num, pagination);
-    content.map((v, i, arr)=>{
+    let num = req.params.num ;//请求内容起始下标
+    let length = Math.ceil(archives.length/pagination);//分页长度
+    let contents = {};
+    contents[num]=[];
+    for(let i = num * pagination;i < num * pagination + pagination;i++ ){
+        contents[num].push(archives[i])
+    }
+    //console.log(contents[num])
+    //console.log('------------+++++++++++++++++++++++++++++++++++++++++--------------------------')
+    contents[num].map((v, i, arr)=>{
         let newpath =  path.join(filepath ,'/', files[v.time].name);
         fs.exists(newpath, function (exists) {
             if(exists){
@@ -69,8 +77,8 @@ router.get('/api/page/:num', function (req, res, next) {
                 });
                 readableStream.on('end', function(){
                     arr[i].content = data;
-                    if(i === content.length - 1){
-                        res.send({length,content})
+                    if(i === contents[num].length - 1){
+                        res.send({length,content:contents[num]})
                     }
                 });
 
