@@ -53,15 +53,18 @@ router.get('/api/archive/:time', function (req, res, next) {
 });
 
 router.get('/api/page/:num', function (req, res, next) {
-    let num = req.params.num ;//请求内容起始下标
+    let num = req.params.num || 0;//请求内容起始下标
+    /*if(num >2){
+        res.status(404).end();
+        return;
+    }*/
     let length = Math.ceil(archives.length/pagination);//分页长度
-    let contents = {};
-    contents[num]=[];
-    for(let i = num * pagination;i < num * pagination + pagination;i++ ){
-        contents[num].push(archives[i])
-    }
-    //console.log(contents[num])
-    //console.log('------------+++++++++++++++++++++++++++++++++++++++++--------------------------')
+    //TODO 缓存搜索内容
+    let contents = [];
+    contents[num] = archives.slice(num * pagination, num * pagination + pagination);
+
+    console.log(contents[num])
+    console.log('------------+++++++++++++++++++++++++++++++++++++++++--------------------------')
     contents[num].map((v, i, arr)=>{
         let newpath =  path.join(filepath ,'/', files[v.time].name);
         fs.exists(newpath, function (exists) {
