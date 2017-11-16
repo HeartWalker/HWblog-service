@@ -1,11 +1,10 @@
 
 const path = require('path');
-const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const filepath = require('../config').articlePath;
 const pagination = require('../config').pagination;
-
+const readFile = require('../tool/readFile');
 require('../tool/global');
 global.getArchives();
 let archives = global.getArchives.archives;
@@ -26,28 +25,13 @@ router.get('/api/archives', function(req, res){
     //console.log('--------------------------------------')
 });
 //TODO 缓存每篇文章
-const  getArticle = (res,req,next,newpath) => new Promise((resolve, reject) => {
-    let data = '';
-    let readableStream = fs.createReadStream( newpath);
-    readableStream.setEncoding('utf8');
-    readableStream.on('data', function(chunk){
-        data += chunk;
-    });
-    readableStream.on('error', function (error) {
-        resolve("");
-        //reject(error);
-    });
-    readableStream.on('end', function(){
-        resolve(data);
+//todo 预读所有文章
 
-    });
-
-});
 router.get('/api/archive/:time', function (req, res, next) {
 
     let newpath =  path.join(filepath ,'/', files[req.params.time].name);
 
-    getArticle(res,req,next,newpath).then(
+    readFile(res,req,next,newpath).then(
         value=>{res.send(Object.assign({},files[req.params.time],{content: value}));}
     )
 
@@ -76,7 +60,7 @@ router.get('/api/page/:num', function (req, res, next) {
 
     contents[num].map((v, i, arr)=>{
         let newpath =  path.join(filepath ,'/', files[v.time].name);
-        getArticle(res,req,next,newpath).then(
+        readFile(res,req,next,newpath).then(
             value => {
                 arr[i].content = value;
                 if(i === contents[num].length - 1){

@@ -5,7 +5,7 @@ const glob = require('glob');
 const fs = require('fs');
 const path = require('path');
 const filepath = require('../config').articlePath;
-//const getArchives  = require( '../tool/getArchives');
+const readFile = require('../tool/readFile');
 
 require('../tool/global');
 global.getArchives();
@@ -24,28 +24,9 @@ router.get('/archive', function(req, res){
 //返回当前文章内容
 router.get('/archive/:time', function (req, res, next) {
     let newpath =  path.join(filepath ,'/', files[req.params.time].name);
-
-    fs.exists(newpath, function (exists) {
-        if(exists){
-            let readableStream = fs.createReadStream( newpath);
-            let data = '';
-            readableStream.setEncoding('utf8');
-            readableStream.on('data', function(chunk){
-                data += chunk;
-            });
-            readableStream.on('error', function (error) {
-                throw error;
-            });
-            readableStream.on('end', function(){
-                res.render('home',Object.assign({},files[req.params.time],{content: data}));
-            });
-
-        }else{
-            next();
-        }
-
-    });
-
+    readFile(res,req,next,newpath).then(
+        value=>{res.render('home',Object.assign({},files[req.params.time],{content: value}));}
+    )
 
 });
 
