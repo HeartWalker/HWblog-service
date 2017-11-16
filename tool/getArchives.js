@@ -31,7 +31,8 @@ function getArchives() {
 
     getArchives.archives = archives
     getArchives.files = files
-    getArchives.expire = true
+    getArchives.expire = true //目录缓存标记
+    getArchives.cacheContent = false //内容缓存标记
 }
 
 module.exports = getArchives

@@ -10,6 +10,7 @@ require('../tool/global');
 global.getArchives();
 let archives = global.getArchives.archives;
 let files = global.getArchives.files;
+
 router.use('/api',function (req, res, next) {
     global.getArchives();
     next();
@@ -24,73 +25,65 @@ router.get('/api/archives', function(req, res){
    // console.log(archives)
     //console.log('--------------------------------------')
 });
+//TODO 缓存每篇文章
+const  getArticle = (res,req,next,newpath) => new Promise((resolve, reject) => {
+    let data = '';
+    let readableStream = fs.createReadStream( newpath);
+    readableStream.setEncoding('utf8');
+    readableStream.on('data', function(chunk){
+        data += chunk;
+    });
+    readableStream.on('error', function (error) {
+        resolve("");
+        //reject(error);
+    });
+    readableStream.on('end', function(){
+        resolve(data);
+
+    });
+
+});
 router.get('/api/archive/:time', function (req, res, next) {
 
     let newpath =  path.join(filepath ,'/', files[req.params.time].name);
 
-    fs.exists(newpath, function (exists) {
-        if(exists){
-            let readableStream = fs.createReadStream( newpath);
-            let data = '';
-            readableStream.setEncoding('utf8');
-            readableStream.on('data', function(chunk){
-                data += chunk;
-            });
-            readableStream.on('error', function (error) {
-                throw error;
-            });
-            readableStream.on('end', function(){
-                res.send(Object.assign({},files[req.params.time],{content: data}));
-            });
-
-        }else{
-            next();
-        }
-
-    });
-
+    getArticle(res,req,next,newpath).then(
+        value=>{res.send(Object.assign({},files[req.params.time],{content: value}));}
+    )
 
 });
 
+let contents = {};
+let length = Math.ceil(archives.length/pagination);//分页长度
 router.get('/api/page/:num', function (req, res, next) {
     let num = req.params.num || 0;//请求内容起始下标
-    /*if(num >2){
-        res.status(404).end();
+    let newlength = Math.ceil(archives.length/pagination);//分页长度
+    //内容是否更新,判断length是否变化
+    if(!global.getArchives.cacheContent || length != newlength){
+        contents = {};
+        length = newlength;
+        global.getArchives.cacheContent = true;
+    }
+
+    if(contents[num]){ //请求的当前组是否已经存在
+        res.send({length,content:contents[num]});
         return;
-    }*/
-    let length = Math.ceil(archives.length/pagination);//分页长度
-    //TODO 缓存搜索内容
-    let contents = [];
+
+    }
+    global.getArchives.cacheContent = true;
+
     contents[num] = archives.slice(num * pagination, num * pagination + pagination);
 
-    console.log(contents[num])
-    console.log('------------+++++++++++++++++++++++++++++++++++++++++--------------------------')
     contents[num].map((v, i, arr)=>{
         let newpath =  path.join(filepath ,'/', files[v.time].name);
-        fs.exists(newpath, function (exists) {
-            if(exists){
-                let readableStream = fs.createReadStream( newpath);
-                let data = '';
-                readableStream.setEncoding('utf8');
-                readableStream.on('data', function(chunk){
-                    data += chunk;
-                });
-                readableStream.on('error', function (error) {
-                    arr[i].content = '';
-                });
-                readableStream.on('end', function(){
-                    arr[i].content = data;
-                    if(i === contents[num].length - 1){
-                        res.send({length,content:contents[num]})
-                    }
-                });
-
-            }else{
-                arr[i].content = '';
-                next();
+        getArticle(res,req,next,newpath).then(
+            value => {
+                arr[i].content = value;
+                if(i === contents[num].length - 1){
+                    res.send({length,content:contents[num]});
+                }
             }
-
-        });
+        )
 
     });
 
