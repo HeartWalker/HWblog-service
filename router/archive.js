@@ -5,7 +5,6 @@ const glob = require('glob');
 const fs = require('fs');
 const path = require('path');
 const filepath = require('../config').articlePath;
-const readFile = require('../tool/readFile');
 
 require('../tool/global');
 global.getArchives();
@@ -24,10 +23,10 @@ router.get('/archive', function(req, res){
 //返回当前文章内容
 router.get('/archive/:time', function (req, res, next) {
     let newpath =  path.join(filepath ,'/', files[req.params.time].name);
-    readFile(res,req,next,newpath).then(
+
+    global.readFiles(res,req,next,newpath).then(
         value=>{res.render('home',Object.assign({},files[req.params.time],{content: value}));}
     )
-
 });
 
 //归档
@@ -50,12 +49,13 @@ router.post('/upload/article',function (req,res) {
     let delimiter = '@#';
     title = title.replace(delimiter,'');
     //let filepath = path.resolve(process.cwd(),'./article');
-    let newpath = filepath + '/' + [title, archive, time].join(delimiter);
-    let oldpath = files[time] && filepath + '/' + files[time].name;
+    let newpath = path.join(filepath , '/' , [title, archive, time].join(delimiter));
+    let oldpath = path.join(files[time] && filepath , '/' , files[time].name);
 
     //新建文章 已存在覆盖或重命名 通过时间戳判定 如果重命名删除原来的文章
     fs.writeFile(newpath, content,'utf8', (err) => {
         //if (err) throw err;
+        delete global.readFiles.articles[newpath];
         global.getArchives.expire = false;
 
     });
@@ -63,6 +63,7 @@ router.post('/upload/article',function (req,res) {
         fs.unlink(oldpath, (err) => {
             console.log('原文修改成功 ');
         });
+        delete global.readFiles.articles[oldpath];
         global.getArchives.expire = false;
     }
     req.flash('success', '文章上传成功');
